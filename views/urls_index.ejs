@@ -9,10 +9,19 @@
 	<body>
 
 		<h1>URLS</h1>
-		<% for(var loop in urls){%>
-		<li><a href='#'><%= urls[loop] %></a> - <%= loop %>></li>
+		<% for(var url in urls){ %>
+			<li>
+				<p>
+					<div>
+						
+					<form method="POST" action="/urls/<%= url %>/delete"><a href='<% %>'><%= urls[url] %></a> - <%= url %> 
+					<button type="submit" class="btn btn-primary"> Delete </button>
+					<a href='/urls/<%=url%>'>Edit </a>
+					</div>
+				</p>
+			</li>
+		</form>
 		<%} %>
-
 	</body>
 
 

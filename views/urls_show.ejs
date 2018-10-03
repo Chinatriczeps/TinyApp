@@ -8,9 +8,13 @@
 
 	<body>
 
-		<h1>URLS</h1>
-		<li><a href='#'><%= shortURL %></a> - <%= longURL %></li>
-
+		<h1>Short URL: <%= shortURL %></h1>
+			<li>
+				<form action="/urls/<%=shortURL%>" method="POST" style="margin:150px;">
+				<input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 300px">
+				<button type="submit" class="btn btn-primary">Update </button>
+				</form>
+			</li>
 	</body>
 
 
