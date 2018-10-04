@@ -2,19 +2,20 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const app = express();
 const PORT = 8080;
-const username = '';
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.set("view engine", "ejs");
+
+app.use(cookieParser());
 // req is object and params key
 let urlDatabase = {
 	"b2xVn2": "http://www.lighthouselabs.ca",
 	"9sm5xK": "http://google.com"
 };
 
-// redirect ot the webside using shortURL
+// redirect to the webside using shortURL
 app.get("/u/:shortURL", (req, res) =>{
 	let shortURL = req.params.shortURL;
 	res.redirect(urlDatabase[shortURL]);
@@ -22,16 +23,34 @@ app.get("/u/:shortURL", (req, res) =>{
 
 
 app.get("/urls", (req, res) => {
-	let templateVars = { urls: urlDatabase};
+	let templateVars;
+	if(!req.cookies){
+		templateVars = {
+			urls: urlDatabase,
+			username: ""
+		};
+	} else {
+		templateVars = {
+			urls: urlDatabase,
+			username: req.cookies["username"]
+		};
+	}
 	res.render("urls_index", templateVars);
 });
 
 app.get("/urls/new", (req, res) => {
-	res.render("urls_new");
+	let templateVars = {
+		username: req.cookies["username"]
+	};
+	res.render("urls_new", templateVars);
 });
 
 app.get("/urls/:id", (req, res) => {
-	let templateVars = { shortURL: req.params.id, longURL: urlDatabase[req.params.id]};
+	let templateVars = {
+		shortURL: req.params.id,
+		longURL: urlDatabase[req.params.id],
+		username: req.cookies["username"]
+	};
 	res.render("urls_show", templateVars);
 });
 
@@ -46,6 +65,7 @@ app.get("/urls.json", (req, res) => {
 app.get("/hello", (req, res) =>{
 	res.send("<html><body>Hello <b>World</b></body></html>\n");
 });
+
 // same as this, but no
 app.post("/urls", (req, res) => {
 	let random = generateRandomString();
@@ -57,21 +77,25 @@ app.post("/urls", (req, res) => {
 // delete short URL list
 app.post("/urls/:id/delete", (req, res) => {
 	delete urlDatabase[req.params.id];
-	let templateVars = { urls: urlDatabase};
 	res.redirect("/urls");
 });
 
 // new URl and replace 
 app.post("/urls/:id", (req, res) => {
 	// shortURL = newLongURL
-	console.log(urlDatabase);
 	urlDatabase[req.params.id] = req.body.longURL;
 	res.redirect("/urls");
 });
 
-// app.post("/urls/login", (req, res) => {
-	
-// })
+app.post("/login", (req, res) => {
+	res.cookie('username', req.body.username);
+	res.redirect('/urls');
+});
+
+app.post("/logout", (req, res) => {
+	res.clearCookie('username', req.body.username);
+	res.redirect('/urls')
+});
 
 
 // Console log for a running server
@@ -88,3 +112,4 @@ function generateRandomString(){
 	} 
 	return randomString;
 };
+

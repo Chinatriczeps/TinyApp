@@ -1,20 +1,22 @@
 <DOCTYPE! html>
 <html lang="en">
 
-	<head>
+	<head>	
 		<meta charset="UTF-8">
 		<title> TinyApp</title>
 	</head>
 
 	<body>
-
+ 		<%- include ../partials/_header %>
 		<h1>Short URL: <%= shortURL %></h1>
+		<% if (username !== undefined) { %>
 			<li>
 				<form action="/urls/<%=shortURL%>" method="POST" style="margin:150px;">
 				<input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 300px">
 				<button type="submit" class="btn btn-primary">Update </button>
 				</form>
 			</li>
+		<% } %>
 	</body>
 
 

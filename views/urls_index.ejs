@@ -2,22 +2,20 @@
 <html lang="en">
 
 	<head>
+		
 		<meta charset="UTF-8">
 		<title> TinyApp</title>
 	</head>
 
 	<body>
-
+		<% include ./partials/_header %>
 		<h1>URLS</h1>
 		<% for(var url in urls){ %>
 			<li>
 				<p>
-					<div>
-						
 					<form method="POST" action="/urls/<%= url %>/delete"><a href='<% %>'><%= urls[url] %></a> - <%= url %> 
 					<button type="submit" class="btn btn-primary"> Delete </button>
 					<a href='/urls/<%=url%>'>Edit </a>
-					</div>
 				</p>
 			</li>
 		</form>

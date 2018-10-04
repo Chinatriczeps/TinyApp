@@ -1,24 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+<% if(username){%> 
 
-	<head>
-
-		<title></title>
-
-	</head>
-
-	<body class="container">
-		<form action="" method="POST">
-			<input type="text" name="username" placeholder="#" style="width: 300px">
-
-
-
-		</form>
-
-		<header>
-
-		</header
-
-	</body>
-
-</html>
+<p><%= username%></p>
+<form action="/logout" method="POST">
+<button type="submit" class="btn btn-primary"> Logout</button>
+</form>
+<% } else { %>
+<form action="/login" method="POST">
+	<input type="text" name="username" placeholder="login" style="width: 300px">
+	<button type="submit" class="btn btn-primary">Submit </button>
+</form>
+<%}%>
