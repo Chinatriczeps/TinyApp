@@ -1,6 +1,8 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const app = express();
 const PORT = 8080;
+const username = '';
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
@@ -66,6 +68,10 @@ app.post("/urls/:id", (req, res) => {
 	urlDatabase[req.params.id] = req.body.longURL;
 	res.redirect("/urls");
 });
+
+// app.post("/urls/login", (req, res) => {
+	
+// })
 
 
 // Console log for a running server
