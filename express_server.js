@@ -62,6 +62,15 @@ app.get("/urls.json", (req, res) => {
 	res.json(urlDatabase);
 });
 
+app.get("/register", (req, res) => {
+	let templateVars = {
+		shortURL: req.params.id,
+		longURL: urlDatabase[req.params.id],
+		username: req.cookies["username"]
+	}
+	res.render("urls_register");
+});
+
 app.get("/hello", (req, res) =>{
 	res.send("<html><body>Hello <b>World</b></body></html>\n");
 });
@@ -71,6 +80,10 @@ app.post("/urls", (req, res) => {
 	let random = generateRandomString();
 	urlDatabase[random] = req.body.longURL;
 	res.redirect('/urls/' + random);
+});
+
+app.post("/register", (req, res) => {
+	res.redirect("/urls")
 });
 
 
