@@ -1,12 +1,30 @@
-<% if(username) { %>
-    <%=  username %>
-    </p>
+<!-- Header should show a name of the project + display users email on each page. -->
+<header>
+    <title>header</title>
+</header>
+<body>
+    <style>
+        
+        span {
+            font-size: 50px;
+        }
+
+        nav {
+            background-color: purple;
+            color: #e8fdff;
+        }
+    </style>
+    <nav>
+        <span> TinyApp for LHL</span>
+    </nav>
+    <% if(user) { %>
+    <p>Welcome back, <strong><%=  user.email %></strong></p>
     <form style="display: inline-block;" action="/logout" method="POST">
+	<br>  
         <input name="logout" type="submit" value="logout">
     </form>
     <% } else  { %>
-  	<p>Please <a href='/login'>sign</a> in or <a href='/register'>register!</a></p>
+    <p>Please<a href="/login">Login</a>. If you are not yet a user, please <a href="/register">Register</a></p>
     <% };%>
 
-
-
+</body>

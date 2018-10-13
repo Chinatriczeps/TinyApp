@@ -1,13 +1,33 @@
+<!-- login page, should be 2 input lines. If user is logged in should show users email and give an option for logging out -->
 <!DOCTYPE html>
 <html>
-<head>
-	<title></title>
-</head>
-<body>
-	<form action="/login" method="POST">
-      Your email:<input type="email" name="email" style="width: 300px" placeholder="email"><br>
-      Your password: <input type="password" name="password" style="width: 300px" placeholder="password"><br>
-      <input type="submit" value="Login">
-    </form>
-</body>
+	<head>
+		<title> Login Page</title>
+		<% include partials/_header %>
+	</head>
+	<body>
+		 <style>
+            body {
+            	text-align: center;1
+            	background-image: url("tiny.jpg")
+        	}
+        </style>
+		<% if(userId) { %>
+	    <h3>You are already logged in.</h3>
+	    <%= user[userId].email %>
+	    <form action="/logout" method="POST">
+	    <input name="logout" type="submit" value="logout">
+		</form>
+		<%} else {%>
+		<h3> Please, enter your email and password </h3>
+		<hr>
+		<form action="/login" method="POST">
+	      Your email:<input type="email" name="email" placeholder="email" style="width: 300px"><br>
+	      Your password: <input type="password" name="password" placeholder="password" style="width: 271px"><br>
+	      <input type="submit" value="Login">
+	    </form>
+	    <%}%>
+	    <hr>
+	    <p>Do not have account with us? <strong><a href="/register" style="text-decoration:none">Register here</a></strong></p>
+	</body>
 </html>

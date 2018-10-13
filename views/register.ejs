@@ -1,0 +1,29 @@
+<!-- Registration page should have 2 inputs for email and password with a link which can redirect to login page if user already has an account. -->
+
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <title>Register</title>
+    </head>
+    <body>
+        <style>
+            body {
+                text-align: center;
+            }
+
+        </style>
+
+        <h3>Please enter your email and create a password.</h3>
+        <form action="/register" method="POST">
+                <p> Your email: </p>
+                <input id="email" type="email" name="email" placeholder="example@gmail.com" style="width: 350px">   
+                <br> 
+                <p>Create a password:</p>
+                <input id="password" type="password" name="password" placeholder="password" style="width: 350px">
+                <br>
+                <input type="submit" value="Register">
+                <hr>
+        </form>
+        <p>Do you have account with us? <strong><a href="/login" style="text-decoration:none">Log in to your account</a></strong></p>
+    </body>
+</html>

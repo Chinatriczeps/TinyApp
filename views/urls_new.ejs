@@ -1,11 +1,18 @@
+<!-- This page should have an input which will make a new url -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
   	<meta charset="UTF-8">
   </head>
-  <body style="font-size:20px; padding:50px;">
+  <body style="font-size:22px;">
+    <style>
+            body {
+                text-align: center;
+            }
+
+        </style>
     <% include ./partials/_header %>
-    <form action="/urls" method="POST" style="margin:150px;">
+    <form action="/urls" method="POST">
       <label for="longURL">Enter a URL:</label>
       <input id="longURL" type="text" name="longURL" placeholder="http://come_to_the_darkside" style="width: 300px">
       <input type="submit" value="Submit">

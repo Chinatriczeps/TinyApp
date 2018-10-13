@@ -1,23 +1,27 @@
-<DOCTYPE! html>
-<html lang="en">
-
-	<head>	
-		<meta charset="UTF-8">
-		<title> TinyApp</title>
-	</head>
-
-	<body>
- 		<%- include ./partials/_header %>
-		<h1>Short URL: <%= shortURL %></h1>
-		<% if (username !== undefined) { %>
-			<li>
-				<form action="/urls/<%=shortURL%>" method="POST" style="margin:150px;">
-				<input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 300px">
-				<button type="submit" class="btn btn-primary">Update </button>
-				</form>
-			</li>
-		<% } %>
-	</body>
-
-
+<!DOCTYPE html>
+<html>
+<head>
+    <% include partials/_header %>
+    <title>Short URL details</title>
+</head>
+<body>
+    <style>
+            body {
+                text-align: center;
+            }
+    </style>
+	<hr>
+    <h3>This is your short URLs</h3>
+    <p><strong>
+         <%=shortURL %></strong> is short URL of <strong><a href="<%=longURL %>" style="text-decoration:none">
+	    <%=urls[shortURL].longURL %></a></strong>
+	</p>
+    <h4>Change your long URL for your short URL</h4>
+    <hr>
+    <form action="/urls/<%= shortURL %>" method="POST">
+        <label for="longURL">Enter a new URL: </label>
+        <input id="longURL" type="text" name="longURL" placeholder="http://become-a-jedi.com" style="width: 207px">
+        <input type="submit" value="Submit">
+    </form>
+</body>
 </html>
