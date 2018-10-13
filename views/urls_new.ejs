@@ -6,12 +6,11 @@
   </head>
   <body style="font-size:22px;">
     <style>
-            body {
-                text-align: center;
-            }
-
-        </style>
-    <% include ./partials/_header %>
+      body {
+        text-align: center;
+           }
+    </style>
+    <%include ./partials/_header%>
     <form action="/urls" method="POST">
       <label for="longURL">Enter a URL:</label>
       <input id="longURL" type="text" name="longURL" placeholder="http://come_to_the_darkside" style="width: 300px">

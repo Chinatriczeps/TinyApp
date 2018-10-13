@@ -17,7 +17,7 @@
         <span> TinyApp for LHL</span>
     </nav>
     <% if(user) { %>
-    <p>Welcome back, <strong><%=  user.email %></strong></p>
+    <p>Welcome back, <%=user.email%></p>
     <form style="display: inline-block;" action="/logout" method="POST">
 	<br>  
         <input name="logout" type="submit" value="logout">

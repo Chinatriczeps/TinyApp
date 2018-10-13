@@ -7,11 +7,10 @@
 	<body>
 		 <style>
             body {
-            	text-align: center;1
-            	background-image: url("tiny.jpg")
+            	text-align: center;
         	}
         </style>
-		<% if(userId) { %>
+		<%if(userId) {%>
 	    <h3>You are already logged in.</h3>
 	    <%= user[userId].email %>
 	    <form action="/logout" method="POST">

@@ -1,9 +1,9 @@
 <!-- Should display list of URLs and an option for creating new urls. Also, should have 2 feautures like editing or adding new URL. -->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 	<head>
 		  <title>TinyApp</title>
-		<% include partials/_header %>
+		<%include partials/_header%>
 	</head>
 	<body>
 		<style>
@@ -14,14 +14,13 @@
 		<h2>Your URLs<h2>
 		<% for(let url in urls) { %>
 		<hr>
-		  <%= url%> <a href=  <%= urls[url].longURL %>  ><%= urls[url].longURL  %></a>
-		  <a style="margin:10px;" style="text-decoration:none" href= "/urls/<%= url %>">Edit</a>
-		  <form style="display: inline-block;" method="POST" action="/urls/<%=url %>/delete"> 
-		  <button type = "submit">delete</button>
-		</form> 
-		<% }; %>
+	 		<%= url%> <a href="<%=urls[url].longURL%>"><%=urls[url].longURL%></a>
+	 		<form style="display: inline-block;" method="POST" action="/urls/<%=url%>/delete"> 
+		 	<button type="submit">delete</button>
+			</form> 
+		 	<a style="text-decoration:none" href= "/urls/<%=url%>">Edit</a>
+			<%};%>
 		<hr>
-		<!-- link for creating new URL -->
-		<p><strong>Do you want to create new URL? <a href="/urls/new">Click here!</a></strong></p>
+		<p><strong>Do you want to create new URL? <a href="/urls/new" style="text-decoration:none">Click here!</a></strong></p>
 	</body>
 </html> 

@@ -112,8 +112,7 @@ app.get('/register', function (req, res) {
 });
 
 app.get("/u/:shortURL", (req, res) => {
-    let userId = req.session.userId;
-    if (userId) {
+    if (req.session.userId) {
         let longURL = urlDatabase[req.params.shortURL].longURL;
         res.redirect(longURL);
     } else {
@@ -177,16 +176,16 @@ app.post('/logout', function (req, res) {
 
 // Function to filter the urlDatabase and compare with the userId to the logged-in user's ID.
 function usersUrls(userId) {
-    let listUrls = {};
+    let listOfUrls = {};
     for (let shortURL in urlDatabase) {
         if (userId === urlDatabase[shortURL].userId) {
-            listUrls[shortURL] = urlDatabase[shortURL]
+            listOfUrls[shortURL] = urlDatabase[shortURL]
         }
     }
-    return listUrls;
+    return listOfUrls;
 };
 
-// Checking if user entered anything to the input field, if yes check if email matches to dataBase, if it does redirect to main page
+// Checking if user entered anything to the input field, if yes check if email already exists
 app.post('/register', function (req, res) {
     if (req.body.email === "" || req.body.password === '') {
         res.status(400).send('You need to enter an email address and a password.');
@@ -196,11 +195,9 @@ app.post('/register', function (req, res) {
         res.status(400).send('Accout already exists, please log in or use another email.');
         return;
     }
-
     let randomId = generateRandomString();
     let password = req.body.password;
     let hashedPassword = bcrypt.hashSync(password, 10);
-
     userDatabase[randomId] = {
         userId: randomId,
         email: req.body.email,

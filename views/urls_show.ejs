@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <% include partials/_header %>
+    <%include partials/_header%>
     <title>Short URL details</title>
 </head>
 <body>
@@ -11,12 +11,10 @@
             }
     </style>
 	<hr>
-    <h3>This is your short URLs</h3>
-    <p><strong>
-         <%=shortURL %></strong> is short URL of <strong><a href="<%=longURL %>" style="text-decoration:none">
-	    <%=urls[shortURL].longURL %></a></strong>
+    <p><strong><%=shortURL%></strong> - <strong><a href="<%=longURL %>" style="text-decoration:none">
+	    <%=urls[shortURL].longURL%></a></strong>
 	</p>
-    <h4>Change your long URL for your short URL</h4>
+    <h3>Change your long URL for your short URL</h3>
     <hr>
     <form action="/urls/<%= shortURL %>" method="POST">
         <label for="longURL">Enter a new URL: </label>
