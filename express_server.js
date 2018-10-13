@@ -64,14 +64,14 @@ const userDatabase = {
 app.get('/urls', (req, res) => {
     let userId = req.session.userId
     if (userId) {
-        let userSpecificURLDatabase = (usersUrls(userId));
+        let uniqueId = (usersUrls(userId));
         let templateVars = {
-            urls: userSpecificURLDatabase,
+            urls: uniqueId,
             user: userDatabase[userId]
         };
         res.render('urls_index', templateVars);
     } else {
-        res.send(`Before accesing this page login`);
+        res.send(`Before accesing this page login or register`);
     }
 });
 
@@ -83,19 +83,17 @@ app.get('/urls/new', (req, res) => {
     if (userId) {
         res.render('urls_new', templateVars);
     } else {
+        res.send('You should be logged in to be able to make a new URLs')
         res.redirect('/login');
     }
 });
 
 app.get('/urls/:id', (req, res) => {
-
     let userId = req.session.userId;
     let uniqueId = (usersUrls(userId));
-
     if (uniqueId[req.params.id] === undefined) {
         res.send('To be able to see this page, log in!');
-    }
-
+    } 
     if (userId) {
         let templateVars = {
             shortURL: req.params.id,
@@ -113,11 +111,15 @@ app.get('/register', function (req, res) {
     res.render('register');
 });
 
-app.get('/u/:shortURL', (req, res) => {
-
-    var shortURL = req.params.shortURL;
-    var longURL = urlDatabase[shortURL].longURL;
-    res.redirect(longURL);
+app.get("/u/:shortURL", (req, res) => {
+    let userId = req.session.userId;
+    if (userId) {
+        let longURL = urlDatabase[req.params.shortURL].longURL;
+        res.redirect(longURL);
+    } else {
+        res.status(400);
+        res.send("Please login or register");
+    }
 });
 
 app.get('/', (req, res) => {
@@ -133,10 +135,9 @@ app.get('/hello', (req, res) => {
 });
 
 app.get('/login', function (req, res) {
-    let userId = req.session.userId
     let templateVars = {
         user: userDatabase,
-        userId: userId,
+        userId: req.session.userId,
     };
 
     res.render('login', templateVars);
@@ -145,22 +146,22 @@ app.get('/login', function (req, res) {
 //  All post requests--------------------------------------------------------------------------------------------
 
 app.post('/urls', (req, res) => {
-    var shortURL = generateRandomString();
-    var longURL = req.body.longURL;
+    let shortURL = generateRandomString();
     urlDatabase[shortURL] = {
         shortURL: shortURL,
-        longURL: longURL,
+        longURL: req.body.longURL,
         userId: req.session.userId
     }
     res.redirect('/urls');
 });
 
+// Delete url from main page
 app.post('/urls/:id/delete', (req, res) => {
-    let targetId = req.params.id;
-    delete urlDatabase[targetId];
+    delete urlDatabase[req.params.id];
     res.redirect('/urls');
 });
 
+// Changing longUrl value of shortUrl 
 app.post('/urls/:id', (req, res) => {
     let longURL = req.body.longURL;
     let shortURL = req.params.id;
@@ -168,7 +169,7 @@ app.post('/urls/:id', (req, res) => {
     res.redirect('/urls');
 });
 
-
+// logout and clear cookie-session
 app.post('/logout', function (req, res) {
     req.session = null;
     res.redirect('/login');
@@ -185,7 +186,7 @@ function usersUrls(userId) {
     return listUrls;
 };
 
-
+// Checking if user entered anything to the input field, if yes check if email matches to dataBase, if it does redirect to main page
 app.post('/register', function (req, res) {
     if (req.body.email === "" || req.body.password === '') {
         res.status(400).send('You need to enter an email address and a password.');
@@ -206,11 +207,10 @@ app.post('/register', function (req, res) {
         password: hashedPassword
     }
     req.session.userId = randomId;
-
     res.redirect('/urls');
-
 });
 
+// Checking if user entered something, if yes check if email and password matches to DB, redirect to main page if everythin is ok
 app.post('/login', function (req, res) {
     let email = req.body.email;
     let password = req.body.password;
