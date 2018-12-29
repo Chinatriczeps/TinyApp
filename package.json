@@ -11,12 +11,14 @@
   "author": "Chingiz zhumagaliyev.chingiz@gmail.com",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "=2.0.0",
     "body-parser": "^1.18.3",
+    "brew": "0.0.8",
     "cookie-parser": "^1.4.3",
     "cookie-session": "^2.0.0-beta.3",
     "ejs": "^2.6.1",
     "express": "^4.16.3",
-    "bcrypt": "=2.0.0"
+    "heroku": "^7.18.3"
   },
   "devDependencies": {
     "nodemon": "^1.18.4"
